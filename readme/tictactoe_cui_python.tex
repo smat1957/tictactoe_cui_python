@@ -1,0 +1,667 @@
+% latex uft-8
+\documentclass[uplatex,a4paper,11pt,oneside,openany]{jsbook}
+%
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{ascmac}
+\usepackage{setspace}
+\usepackage{here}
+\usepackage{listings,jlisting} %日本語のコメントアウトをする場合jlistingが必要
+%ここからソースコードの表示に関する設定
+\usepackage{xcolor,comment}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\begin{comment}
+\lstset{
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1000,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\end{comment}
+
+%ここからソースコードの表示に関する設定
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{custompython}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  xleftmargin=\parindent,
+  language=Python,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customjava}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  xleftmargin=\parindent,
+  language=java,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstset{escapechar=@,style=custompython}
+
+\makeatletter
+\def\ps@plainfoot{%
+  \let\@mkboth\@gobbletwo
+  \let\@oddhead\@empty
+  \def\@oddfoot{\normalfont\hfil-- \thepage\ --\hfil}%
+  \let\@evenhead\@empty
+  \let\@evenfoot\@oddfoot}
+  \let\ps@plain\ps@plainfoot
+\renewcommand{\chapter}{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \global\@topnum\z@
+  \secdef\@chapter\@schapter}
+\makeatother
+%
+\newcommand{\maru}[1]{{\ooalign{%
+\hfil\hbox{$\bigcirc$}\hfil\crcr%
+\hfil\hbox{#1}\hfil}}}
+%
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.55in}
+%
+\begin{document}
+% START DOCUMENT
+%
+% COVER
+\begin{center}
+  \huge \par
+  \vspace{15mm}
+  \huge \par
+  \vspace{15mm}
+  \LARGE Tic Tac Toe (CUI - Python) \par
+  \vspace{100mm}
+  \Large \date \par
+  \vspace{15mm}
+  \Large \par
+  \vspace{10mm}
+  \Large S.Matoike \par
+  \vspace{10mm}
+\end{center}
+\thispagestyle{empty}
+\clearpage
+\addtocounter{page}{-1}
+\newpage
+\setcounter{tocdepth}{3}
+%
+\tableofcontents
+%
+\chapter{Pythonによる三目並べ }
+
+三目並べは「二人零和有限確定完全情報ゲーム」と呼ばれるゲームに分類されます．
+簡単に言うと「勝敗は偶然に左右されず，最善手を打てばどちらかが勝つまたは引き分けになるゲーム」のことです．
+他にもリバーシ，チェッカー，チェス，将棋に囲碁などもこのゲームに分類されます．
+
+初めに三目並べというゲームについて定義をしておきます．
+
+三目並べ:
+3×3の格子上に二人のプレイヤーが「O」「X」を配置し、自分のマークを先に3つ並べた方が勝ちです．
+
+%\section{CUI(Character User Interface)版}
+
+\section{太郎さんと花子さんの対戦}
+
+プログラムを実行すると盤面が表示され、×の石を置く場所を指定するよう促されます
+
+画面上に示された番号を入力すると、その番号のスロットに×の石が置かれた盤面が表示され、次の手番の○に、石を置く場所を指定するように促されます
+
+手番を交互に変えながらゲームは進み、縦、横、斜めの何れかに、先に一列に自分の石を並べた方が勝ちとなります
+
+既に石の置かれているスロット番号を指定できませんし、スロット番号として 0 〜 8 以外の数値を指定することもできません
+
+\begin{spacing}{0.74}
+  \begin{verbatim}
+    スタート！ [Tic Tac Toe]
+    /---|---|---\
+    | 0 | 1 | 2 |
+    |---|---|---|
+    | 3 | 4 | 5 |
+    |---|---|---|
+    | 6 | 7 | 8 |
+    \---|---|---/
+    太郎 さんのturnです。スロット番号を指定して下さい : 4
+    /---|---|---\
+    | 0 | 1 | 2 |
+    |---|---|---|
+    | 3 | X | 5 |
+    |---|---|---|
+    | 6 | 7 | 8 |
+    \---|---|---/
+    花子 さんのturnです。スロット番号を指定して下さい : 2
+    /---|---|---\
+    | 0 | 1 | O |
+    |---|---|---|
+    | 3 | X | 5 |
+    |---|---|---|
+    | 6 | 7 | 8 |
+    \---|---|---/
+    太郎 さんのturnです。スロット番号を指定して下さい :
+  \end{verbatim}
+\end{spacing}
+
+\subsection{ゲームの進行を司るクラス：Game}
+
+Gameクラスのオブジェクトであるgameを生成し、
+gameオブジェクトの中のstart()というメソッドを実行します
+
+この後、main.pyとGame.pyでファイルを別にしていきますので、
+以下のように、main.pyを書いて、
+その冒頭で、Game.pyからGameというクラスをimportするという記述が必要になります
+
+\begin{lstlisting}[caption=main.py,label=prog01-3-1]
+from Game import Game
+
+if __name__ == '__main__':
+    game = Game()
+    game.start()
+\end{lstlisting}%
+
+\subsection{盤面を管理するクラス：Board}
+
+ゲームの盤面を保持するクラスBoardを作っていきます
+
+Boardクラスのオブジェクトboardを、Gameクラスのコンストラクタで生成することにします
+
+ゲームの進行を行うstart()メソッドでは、boardオブジェクトを印刷するメソッドdraw()を呼び出すようにしています
+
+Gameクラスで、Boardクラスを使っていますから、
+そのファイルの冒頭で、BoardファイルからBoardクラスをimportせよという指示が必要です
+
+\begin{lstlisting}[caption=class Game,label=prog02-1]
+from Board import Board
+
+class Game:
+    def __init__(self):
+        self.board = Board()
+
+    def start(self):
+        self.board.draw()
+\end{lstlisting}%
+
+盤面の実体は、各スロットに対応させた9個の整数からなるリストboardで保持することとし、Boardクラスのコンストラクタで準備を整えます
+
+draw()メソッドは、盤面boardの状態を画面に表示する処理を行っています
+
+9個の文字からなるリストbdを用意して、boardの値が0なら空きスロット、
+整数の1なら一人目のプレイヤーの石、整数の2なら二人目のプレイヤーの石が置かれている
+として、それぞれ文字'X'と'O'の文字を表示させています
+
+print()関数で、「文字列.format」という書き方によって、\{\}の位置にbdの文字を書いていますが、
+「文字列.format」という書き方よりも、「f文字列」という書き方によって\{\}に値を埋め込む方が
+Pythonicな書き方だと「Effective Python」の項目4には書かれています
+
+\begin{lstlisting}[caption=class Board,label=prog02-2]
+class Board:
+    def __init__(self):
+        self.board = [0,0,0,\
+                      0,0,0,\
+                      0,0,0]
+
+    def draw(self):
+        bd = ['', '', '',\
+              '', '', '',\
+              '', '', '']
+        n = 0
+        for val in self.board:
+            if val==0:
+                bd[n] = str(n)
+            elif val==1:
+                bd[n] = 'X'
+            elif val==2:
+                bd[n] = 'O'
+            n += 1
+        print( '/---|---|---\\')
+        print( '| {} | {} | {} |'.format(bd[0], bd[1], bd[2]) )
+        print( '|---|---|---|')
+        print(f'| {bd[3]} | {bd[4]} | {bd[5]} |')
+        print( '|---|---|---|')
+        print(f'| {bd[6]} | {bd[7]} | {bd[8]} |')
+        print( '\\---|---|---/')
+\end{lstlisting}%
+
+\subsection{プレーヤのクラス：Player}
+
+Gameクラスのコンストラクタの中で、
+Playerクラスのオブジェクトとして、taroとhanakoを生成しています。
+Playerクラスのコンストラクタへの、
+一つ目の引数で名前を、二つ目の引数で盤面におく石に対応づけた整数を渡しています。
+
+この整数は、taroとhanakoの識別子としての役割を持たせますので、区別できる値でなければなりません。
+
+また、gameオブジェクトの中でPLAYERというリストを定義して、
+taroとhanakoというPlayerクラスのオブジェクトのリストを作っています。
+PLAYER[0]によってtaroオブジェクトを、PLAYER[1]によってhanakoオブジェクトを
+取り出せることになります。
+
+ゲームの進行は大まかにいうと、①盤面を表示して、②一方のプレーヤを選んで、③そのプレーヤが盤面上に石を置いて、④手番を交代して、
+をゲームオーバーまで繰り返すことになります
+
+\begin{lstlisting}[caption=class Game,label=prog03-1]
+from Board import Board
+from Player import Player
+
+class Game:
+    def __init__(self):
+        self.board = Board()
+        taro = Player('太郎', 1)
+        hanako = Player('花子', 2)
+        self.PLAYER = [taro, hanako]
+
+    def start(self):
+        turn = 0
+        while True:                       # 以下をゲームオーバーまで繰り返す
+            self.board.draw()                 # ①盤面を表示して
+            player = self.PLAYER[ turn ]      # ②プレーヤを選んで
+            player.put_stone( self.board )    # ③そのプレーヤが盤面に石を置いて
+            turn = (turn+1) % 2               # ④手番を交代する
+\end{lstlisting}%
+
+Playerクラスでは、そのコンストラクタで、
+引数で受け取った名前と番号を各オブジェクトに保存するようにしています
+
+put\_stone()メソッドでは、input()文でプレーヤにスロット番号の入力を促し、
+受け取った番号（文字列s）をint(文字列)関数によって整数に変換して、
+盤面board上のスロット番号の位置に、このプレーヤオブジェクトが保持しているid番号（1か2）を納めています
+
+\begin{lstlisting}[caption=class Player,label=prog03-2]
+from Board import Board
+
+class Player:
+    def __init__(self, name, id):
+        self.name = name
+        self.id = id
+
+    def put_stone(self, board):
+        s = input(self.name + "さんの手番です。スロット番号は？ : ")
+        n = int(s)
+        board.board[ n ] = self.id
+\end{lstlisting}%
+
+\subsection{Boardクラスで勝敗の判定}
+
+Boardクラスのwinner()メソッドでは、
+行方向に3つ（row0, row1, row2）、列方向に3つ（col0, col1, col2）、斜め方向に2つ（crs0, crs1）のそれぞれで、
+各スロットの中の値が一致しているか否かをチェックしています
+
+行または列、斜めのどれか一つでも一致しているものがあったら、そのときのplayerの勝ちです
+
+\begin{lstlisting}[caption=class Board,label=prog03-5]
+class Board:
+    def __init__(self):
+        self.board = [0,0,0,0,0,0,0,0,0]
+
+    def draw(self):
+        bd = ['', '', '','', '', '','', '', '']
+        for n, val in enumerate( self.board ):
+            ・
+            変更なし
+            ・
+        print( '\\---|---|---/')
+
+    # 以下を追加
+    def winner(self, player):
+        row0 = self.board[0]!=0 and\
+               self.board[0]==self.board[1] and self.board[0]==self.board[2]
+        row1 = self.board[3]!=0 and\
+               self.board[3]==self.board[4] and self.board[3]==self.board[5]
+        row2 = self.board[6]!=0 and\
+               self.board[6]==self.board[7] and self.board[6]==self.board[8]
+        col0 = self.board[0]!=0 and\
+               self.board[0]==self.board[3] and self.board[0]==self.board[6]
+        col1 = self.board[1]!=0 and\
+               self.board[1]==self.board[4] and self.board[1]==self.board[7]
+        col2 = self.board[2]!=0 and\
+               self.board[2]==self.board[5] and self.board[2]==self.board[8]
+        crs0 = self.board[0]!=0 and\
+               self.board[0]==self.board[4] and self.board[0]==self.board[8]
+        crs1 = self.board[2]!=0 and\
+               self.board[2]==self.board[4] and self.board[2]==self.board[6]
+        if col0 or col1 or col2 or row0 or row1 or row2 or crs0 or crs1:
+            return True
+\end{lstlisting}%
+
+勝敗を判定して結果を表示し、breakによってゲームのループを抜けます
+
+\begin{lstlisting}[caption=class Game,label=prog03-6]
+from Board import Board
+from Player import Player
+
+class Game:
+    def __init__(self):
+        self.board = Board()
+        taro = Player('太郎', 1)
+        hanako = Player('花子', 2)
+        self.PLAYER = [taro, hanako]
+
+    def start(self):
+        turn = 0
+        while True:
+            self.board.draw()
+            player = self.PLAYER[turn]
+
+            b1 = self.board.winner(player)
+            if b1:
+                print( player.name + 'さん　の勝ち')
+                break
+
+            turn = (turn+1) % 2
+\end{lstlisting}%
+
+\subsection{引き分けの判定}
+
+%Playerクラスのput\_stone()の引数で、Boardクラスのオブジェクトboardを受け取っています。
+boardオブジェクトが持っているboardプロパティは、9個の各スロットの状態（空かマルかバツか→0か1か2か）を保持するリストでした。
+スロットが空き（スロットの値がゼロ）であれば、石を置くことができます。
+
+値がゼロのスロット番号（n）を集めたリストをvacantに作り、その長さはlen()関数で調べることができます。
+リストの長さがゼロであるということは、空のスロット（値がゼロのスロット）は無くなったということですから、もう石を置くことはできません（このとき引き分けです）。
+
+\begin{figure}[H]
+  \centering
+  \begin{tabular}{ll}
+      \begin{minipage}{0.5\hsize}
+      \centering
+      \begin{lstlisting}[caption=,label=prog03-03]
+      # 引き分けの判定はここから
+      empty = []
+      n = 0
+      for slot in board.board:
+          if slot==0:
+              empty.append( n )
+          n += 1
+      if len( empty )==0:
+          return False
+      # ここまで
+      \end{lstlisting}%
+      \end{minipage}
+      \begin{minipage}{0.5\hsize}
+      \flushright
+      \begin{lstlisting}[caption=,label=prog03-04]
+      # 引き分けの判定はここから
+      empty = []
+      for n in range( len(board.board) ):
+          slot = board.board[n]
+          if slot==0:
+              empty.append( n )
+
+      if len( empty )==0:
+          return False
+      # ここまで
+      \end{lstlisting}%
+      \end{minipage}
+    \end{tabular}
+\end{figure}%
+
+引き分けの判定部分は、上のように書くこともできますが、ここでは
+以下のようなenumerate()関数の使い方を学習しましょう。
+「Effective Python」には項目7で、rangeではなくenumerateを使うのが
+Pythonicだとされています。
+
+また、if len( empty )==0: という記述は、if not empty: と書いた方がPythonicだと同じ本の第一章には書かれています。
+
+\begin{lstlisting}[caption=class Board,label=prog03-5]
+class Board:
+    def __init__(self):
+        self.board = [0,0,0,0,0,0,0,0,0]
+
+    def draw(self):
+        bd = ['', '', '','', '', '','', '', '']
+        for n, val in enumerate( self.board ):
+            ・
+            変更なし
+            ・
+        print( '\\---|---|---/')
+
+    def winner(self, player):
+            ・
+            変更なし
+            ・
+        if col0 or col1 or col2 or row0 or row1 or row2 or crs0 or crs1:
+            return True
+
+    # 以下を追加
+    def vacant(self):
+        empty = []
+        for n, slot in enumerate(self.board):
+            if slot == 0:
+                empty.append(n)
+        return empty
+\end{lstlisting}%
+
+入力されたスロット番号nが、vacantリストの中にあることを確認すること（if n in vacant:）によって、
+既に置かれた石の上に上書きすることを防いでいます。
+
+今の段階で、
+put\_stone()メソッドが返す値は、Falseならば引き分け、Trueならばボード上に石を置きましたという意味になります
+
+\begin{lstlisting}[caption=class Player,label=prog03-3]
+from Board import Board
+
+class Player:
+    def __init__(self, name, id):
+        self.name = name
+        self.id = id
+
+    def put_stone(self, board):
+        # 引き分けの判定はここから
+        vacant = board.vacant()
+        if not vacant:
+          return False
+        # ここまで
+        while True:
+            s = input(self.name + "さんの手番です。スロット番号は？ : ")
+            n = int(s)
+            if n in vacant:      # 空きスロットのリストに番号nは含まれているか？
+                board.board[ n ] = self.id
+                break
+        return True
+\end{lstlisting}%
+
+Gameクラスでは、put\_stone()メソッドを呼び出して判定する必要があります
+
+引き分けの判定（b2）でFalseが返された（not b2 == True）なら、'引き分け'と表示してゲームの反復を抜けます（break）
+
+b2 が Trueを返してきた場合は、順当にその時の手番（turn）のplayerオブジェクトが、
+盤面オブジェクト（self.board）に石を置いた（put\_stone()した）場合になりますから、そのままゲームを続行します
+
+引き分けと勝敗の判定を、ゲーム進行の途中に入れています
+
+引き分けた場合、あるいは勝敗のついた場合のいずれの場合でも、
+break文によってゲームの進行（反復）を終えています
+
+\begin{lstlisting}[caption=class Game,label=prog03-6]
+from Board import Game
+from Player import Player
+
+class Game:
+    def __init__(self):
+        self.board = Board()
+        taro = Player('太郎', 1)
+        hanako = Player('花子', 2)
+        self.PLAYER = [taro, hanako]
+
+    def start(self):
+        turn = 0
+        while True:
+            self.board.draw()
+            player = self.PLAYER[turn]
+
+            b2 = player.put_stone( self.board )
+            if not b2:
+                print('引き分け')
+                break
+
+            b1 = self.board.winner(player)
+            if b1:
+                print( player.name + 'さん　の勝ち')
+                break
+
+            turn = (turn+1) % 2
+\end{lstlisting}%
+
+\section{太郎さんとコンピュータの対戦}
+
+花子さんをコンピュータに変更します
+
+\subsection{Gameクラスの書き換え}
+
+Gameクラスの最初、コンストラクタでPlayerクラスのオブジェクト生成を変更します
+
+\begin{lstlisting}[caption=class Game,label=prog04-1]
+from Board import Game
+from Player import Player
+
+class Game:
+    def __init__(self):
+        self.board = Board()
+        human = Player('Taro', 1)         # 変更点はここから3行
+        machine = Player('computer', 2)
+        self.PLAYER = [human, machine]
+
+    def start(self):
+        turn = 0
+        while True:
+            self.board.draw()
+                ・
+                ・   この部分に変更なし
+                ・
+\end{lstlisting}%
+
+\subsection{Playerクラスの書き換え}
+
+Playerクラスでは、
+computer オブジェクトの場合には乱数によって、vacantリストの中から石をおくスロット番号を選ぶようにします
+
+humanオブジェクトの場合は、スロット番号の入力を促しています
+
+Playerクラスのオブジェクトは、humanの場合とmachineの場合がありますから、
+Playerクラスのそれぞれのオブジェクトが持っているself.idの値を見て、
+それが1ならhumanオブジェクト、2ならmachineオブジェクトだと判定している部分に注目しましょう
+
+\begin{lstlisting}[caption=class Player,label=prog04-2]
+from Board import Board
+from random import randint
+
+class Player:
+    def __init__(self, name, id):
+        self.name = name
+        self.id = id
+
+    def put_stone(self, board):
+        # 引き分けの判定はここから
+        vacant = board.vacant()
+        if not vacant:
+            return False
+        # 変更点は以下の部分
+        if self.id == 2:      # Computerの場合は乱数で
+            n = randint( 0, len(vacant)-1 )
+            board.board[ vacant[n] ] = self.id
+        else:                 # Taroの場合はキーボード入力でスロット番号を指定させる
+            while True:
+                s = input(self.name + "さんの手番です。スロット番号は？ : ")
+                n = int(s)
+                if n in vacant:
+                    board.board[ n ] = self.id
+                    break
+        return True
+\end{lstlisting}%
+
+\subsection{Boardクラスの書き換え}
+
+winner()メソッドをもう少し簡潔に記述し直すことにしましょう
+
+\begin{lstlisting}[caption=class Board,label=prog04-3]
+class Board:
+          .
+          . この部分に変更なし
+          .
+    def winner(self, player):
+        def scan(n1, n2, n3):
+            return self.board[n1]!=0 and\
+                   self.board[n1]==self.board[n2] and\
+                   self.board[n1]==self.board[n3]
+        return scan(0,1,2) or scan(3,4,5) or scan(6,7,8) or\
+               scan(0,3,6) or scan(1,4,7) or scan(2,5,8) or\
+               scan(0,4,8) or scan(2,4,6)
+\end{lstlisting}%
+
+%\section{GUI(Graphical User Interface)版}
+
+%\section*{謝辞}
+%\addcontentsline{toc}{chapter}{謝辞}
+%
+\begin{thebibliography}{99}
+  \bibitem{1}
+\end{thebibliography}
+%
+% END DOCUMENT
+\end{document}
+%
